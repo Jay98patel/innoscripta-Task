@@ -1,15 +1,8 @@
 import axios from "axios";
+import { NYTParams } from "../new-app.interface";
 
 const API_KEY = process.env.REACT_APP_NYT_API_KEY;
 const BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-
-interface NYTParams {
-  q?: string;
-  begin_date?: string;
-  end_date?: string;
-  sort?: string;
-  page?: number;
-}
 
 export const fetchArticlesFromNYT = async (params: NYTParams) => {
   try {
