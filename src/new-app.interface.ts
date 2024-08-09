@@ -1,10 +1,11 @@
 export interface GuardianParams {
-  page?: number;
-  pageSize?: number;
-  orderBy?: string;
-  useDate?: string;
-  fromDate?: string;
-  toDate?: string;
+  page: number;
+  pageSize: number;
+  orderBy: string;
+  useDate: string;
+  fromDate: string;
+  toDate: string;
+  productionOffice: string;
 }
 
 export interface NewsAPIParams {
@@ -21,4 +22,11 @@ export interface NYTParams {
   end_date?: string;
   sort?: string;
   page?: number;
+}
+
+export interface ArticleCardProps {
+  title: string;
+  description: string;
+  imageUrl: string | undefined; // Allow undefined
+  articleUrl: string;
 }

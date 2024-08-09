@@ -1,13 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-
-interface ArticleCardProps {
-  title: string;
-  description: string;
-  imageUrl: string;
-  articleUrl: string;
-}
+import { ArticleCardProps } from "../new-app.interface";
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
   title,
@@ -17,7 +11,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
 }) => {
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={imageUrl} />
+      <Card.Img variant="top" src={imageUrl || "default-image-url.jpg"} />
+      Provide a default image URL
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
