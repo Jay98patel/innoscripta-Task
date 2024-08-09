@@ -1,26 +1,29 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./styles/App.scss";
+// src/app/App.tsx
 
-function App() {
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "./styles/App.scss"; // Import global styles
+
+// Lazy load pages
+const HomePage = lazy(() => import("./pages/HomePage"));
+const GuardianPage = lazy(() => import("./pages/GuardianPage"));
+const NYTimesPage = lazy(() => import("./pages/NYTimesPage"));
+const NewsAPIPage = lazy(() => import("./pages/NewsAPIPage"));
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/guardian" element={<GuardianPage />} />
+          <Route path="/nytimes" element={<NYTimesPage />} />
+          <Route path="/newsapi" element={<NewsAPIPage />} />
+        </Routes>
+      </Suspense>
+    </Router>
   );
-}
+};
 
 export default App;
