@@ -18,10 +18,10 @@ export const fetchNewsAPIArticles = createAsyncThunk(
 const newsApiSlice = createSlice({
   name: "newsapi",
   initialState: {
+    articles: [],
     filters: {
       selectedCountry: null as string | null,
     },
-    articles: [],
     loading: false,
     error: null as string | null, // Allow the error to be either string or null
   },

@@ -6,8 +6,10 @@ import NewsAPIFilters from "./NewsAPIFilters";
 import PaginationComponent from "./Pagination";
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { Country, NewsAPI, Sources } from "../new-app.interface";
+import { useAppSelector } from "../hooks/hooks";
 
 const NewsAPIPage: React.FC = () => {
+  const status = useAppSelector((state: any) => state.newsapi?.loading);
 
   const [articles, setArticles] = useState<NewsAPI[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,26 +29,31 @@ const NewsAPIPage: React.FC = () => {
   const [selectedSources, setSelectedSources] = useState<string>();
 
   useEffect(() => {
-    fetchEverything({
-      page: currentPage,
-      pageSize: pageSize,
-      sources: selectedSources,
-    })
-      .then((response) => {
-        setArticles(response?.articles);
-        setTotalPages(Math.ceil(response.totalResults / 10));
-        console.log(totalPages);
+    console.log(status);
+    if (status) {
+      fetchEverything({
+        page: currentPage,
+        pageSize: pageSize,
+        sources: selectedSources,
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [currentPage, selectedSources, pageSize]);
+        .then((response) => {
+          setArticles(response?.articles);
+          setTotalPages(Math.ceil(response.totalResults / 10));
+          console.log(totalPages);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [status, currentPage, selectedSources, pageSize]);
 
   useEffect(() => {
-    sources(selectedCategory, selectedCountry).then((sources) => {
-      setSourcesForNews(sources);
-    });
-  }, [selectedCategory, selectedCountry]);
+    if (status) {
+      sources(selectedCategory, selectedCountry).then((sources) => {
+        setSourcesForNews(sources);
+      });
+    }
+  }, [status, selectedCategory, selectedCountry]);
 
   useEffect(() => {
     console.log(selectedSources);
