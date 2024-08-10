@@ -10,6 +10,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const GuardianPage = lazy(() => import("./pages/GuardianPage"));
 const NYTimesPage = lazy(() => import("./pages/NYTimesPage"));
 const NewsAPIPage = lazy(() => import("./pages/NewsAPIPage"));
+const ArticleDetailModal = lazy(() => import('./components/ArticleDetailModal'));
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <Route path="/guardian" element={<GuardianPage />} />
           <Route path="/nytimes" element={<NYTimesPage />} />
           <Route path="/newsapi" element={<NewsAPIPage />} />
+          <Route path="/article/:id" element={<ArticleDetailModal />} />
         </Routes>
       </Suspense>
     </Router>

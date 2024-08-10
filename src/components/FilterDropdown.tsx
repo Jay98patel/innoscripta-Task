@@ -1,24 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-
-interface FilterDropdownProps {
-  options: string[];
-  onSelect: (option: string) => void;
-}
+import { FilterDropdownProps } from "../new-app.interface";
 
 const FilterDropdown: React.FC<FilterDropdownProps> = ({
   options,
+  placeholder,
   onSelect,
 }) => {
+  const [filter, setFilter] = useState<string>();
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Filter
+        {filter ?? placeholder}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         {options.map((option) => (
-          <Dropdown.Item key={option} onClick={() => onSelect(option)}>
+          <Dropdown.Item
+            key={option}
+            onClick={() => {
+              onSelect(option);
+              setFilter(option);
+            }}
+          >
             {option}
           </Dropdown.Item>
         ))}

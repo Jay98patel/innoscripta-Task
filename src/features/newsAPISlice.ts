@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchEverything } from "../api/newsAPI";
 import { NewsAPIParams } from "../new-app.interface";
 
@@ -14,11 +14,18 @@ export const fetchNewsAPIArticles = createAsyncThunk(
 const newsApiSlice = createSlice({
   name: "newsapi",
   initialState: {
+    filters: {
+      selectedCountry: null as string | null,
+    },
     articles: [],
     loading: false,
     error: null as string | null, // Allow the error to be either string or null
   },
-  reducers: {},
+  reducers: {
+    setSelectedfilters: (state, action: PayloadAction<string | null>) => {
+      state.filters.selectedCountry = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchNewsAPIArticles.pending, (state) => {
       state.loading = true;
@@ -33,5 +40,7 @@ const newsApiSlice = createSlice({
     });
   },
 });
+
+export const { setSelectedfilters } = newsApiSlice.actions;
 
 export default newsApiSlice.reducer;

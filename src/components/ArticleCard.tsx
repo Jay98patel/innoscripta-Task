@@ -1,14 +1,17 @@
+// src/components/ArticleCard.tsx
+
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { ArticleCardProps } from "../new-app.interface";
+import { GenericArticleProps } from "../new-app.interface";
 
-const ArticleCard: React.FC<ArticleCardProps> = ({
+// Making the component generic
+const ArticleCard = <T extends string>({
   title,
   description,
   imageUrl,
   articleUrl,
-}) => {
+}: Partial<GenericArticleProps<T>>) => {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={imageUrl || "default-image-url.jpg"} />

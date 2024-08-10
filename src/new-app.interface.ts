@@ -30,3 +30,45 @@ export interface ArticleCardProps {
   imageUrl: string | undefined; // Allow undefined
   articleUrl: string;
 }
+
+export interface NewsAPI {
+  title: string;
+  description?: string;
+  urlToImage: string;
+  url: string;
+}
+
+export interface NYT {
+  title: string;
+  description: string;
+  urlToImage: string;
+  url: string;
+}
+
+export interface GenericArticleProps<T> {
+  title: T;
+  description: T;
+  imageUrl: T;
+  articleUrl: T;
+}
+
+export interface Sources {
+  id: string;
+  category: string;
+  country: string;
+  description: string;
+  language: string;
+  name: string;
+  url: string;
+}
+
+export interface Country {
+  countryShortCode: string;
+  countryName: string;
+}
+
+export interface FilterDropdownProps {
+  placeholder: string ;
+  options: string[];
+  onSelect: (option: string) => void;
+}

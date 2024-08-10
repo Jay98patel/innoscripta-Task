@@ -25,7 +25,7 @@ const GuardianPage: React.FC = () => {
     setLoading(true);
     fetchArticlesFromGuardian(filters)
       .then((data) => {
-        setArticles(data.response.results); // Ensure data.results is of type Article[]
+        setArticles(data.response.results);
         setLoading(false);
       })
       .catch((error) => {
@@ -49,14 +49,13 @@ const GuardianPage: React.FC = () => {
         <ArticleCard
           key={article.id}
           title={article.webTitle}
-          description={article.webTitle} // Assuming description is intended to be webTitle
-          imageUrl={article.fields?.thumbnail}
+          description={article.webTitle}
           articleUrl={article.webUrl}
         />
       ))}
       <PaginationComponent
         currentPage={filters.page}
-        totalPages={10} // This should be dynamic based on API response if possible
+        totalPages={10}
         onPageChange={handlePageChange}
       />
     </div>
