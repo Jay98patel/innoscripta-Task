@@ -23,7 +23,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
               setFilter(option);
             }}
           >
-            {option}
+            {option.toUpperCase()}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

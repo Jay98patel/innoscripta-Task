@@ -65,6 +65,8 @@ class NewsAPIConstants {
     { countryShortCode: "ve", countryName: "Venezuela" },
     { countryShortCode: "za", countryName: "South Africa" },
   ];
+
+  sortKeys: string[] = ["newest", "oldest", "relevance"];
 }
 
 export const NEW_API_CONSTANTS = new NewsAPIConstants();

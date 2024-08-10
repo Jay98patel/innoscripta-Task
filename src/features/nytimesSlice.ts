@@ -1,22 +1,42 @@
+// src/features/nytimesSlice.ts
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchArticlesFromNYT } from "../api/nytimesAPI";
-import { NYTParams } from "../new-app.interface"; // Ensure this interface is correctly defined
 
 export const fetchNYTArticles = createAsyncThunk(
-  "nytimes/fetchArticles",
-  async (params: NYTParams) => {
-    const response = await fetchArticlesFromNYT(params);
-    return response; // Assuming response is structured correctly for direct use
+  'nytimes/fetchArticles',
+  async (params: { page: number; sort: string }, { rejectWithValue }) => {
+    try {
+      const response = await fetchArticlesFromNYT(params);
+      return response;
+    } catch (err) {
+      return rejectWithValue('Failed to fetch articles');
+    }
   }
 );
+interface Article {
+  _id: string;
+  headline: { main: string };
+  snippet: string;
+  multimedia: { url: string }[];
+  web_url: string;
+}
+
+interface NYTimesState {
+  articles: Article[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: NYTimesState = {
+  articles: [],
+  loading: false,
+  error: null,
+};
 
 const nytimesSlice = createSlice({
   name: "nytimes",
-  initialState: {
-    articles: [],
-    loading: false,
-    error: null as string | null, // Updated to allow null or string
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchNYTArticles.pending, (state) => {
@@ -28,7 +48,7 @@ const nytimesSlice = createSlice({
     });
     builder.addCase(fetchNYTArticles.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error.message || "An unexpected error occurred"; // Handling undefined case
+      state.error = action.error.message || "Failed to fetch articles";
     });
   },
 });
