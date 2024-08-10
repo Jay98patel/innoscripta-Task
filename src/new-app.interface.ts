@@ -53,6 +53,7 @@ export interface NYT {
 }
 
 export interface GenericArticleProps<T> {
+  id: T;
   title: T;
   description: T;
   imageUrl: T;

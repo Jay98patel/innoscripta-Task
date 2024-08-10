@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { lazy, Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./styles/App.scss";
+import NewyorkArticleDetail from "./components/NewYorkTimesDetail";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GuardianPage = lazy(() => import("./pages/GuardianPage"));
@@ -21,6 +22,11 @@ const App: React.FC = () => {
           <Route path="/nytimes" element={<NYTimesPage />} />
           <Route path="/newsapi" element={<NewsAPIPage />} />
           <Route path="/article/:id" element={<ArticleDetailModal />} />
+          <Route
+            path="/new-york-times-articules"
+            element={<NewyorkArticleDetail />}
+          />
+          <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </Suspense>
     </Router>

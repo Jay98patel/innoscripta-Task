@@ -1,12 +1,18 @@
 // src/features/nytimesSlice.ts
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchArticlesFromNYT } from "../api/nytimesAPI";
 
 export const fetchNYTArticles = createAsyncThunk(
   "nytimes/fetchArticles",
   async (
-    params: { page: number; sort: string; q?: string },
+    params: {
+      page: number;
+      sort: string;
+      q?: string;
+      begin_date?: string;
+      end_date?: string;
+    },
     { rejectWithValue }
   ) => {
     try {
@@ -17,30 +23,40 @@ export const fetchNYTArticles = createAsyncThunk(
     }
   }
 );
-interface Article {
+export interface Article {
+  title: string;
   _id: string;
   headline: { main: string };
   snippet: string;
   multimedia: { url: string }[];
   web_url: string;
+  description: string;
+  imageUrl?: string;
+  articleUrl?: string;
 }
 
 interface NYTimesState {
   articles: Article[];
   loading: boolean;
   error: string | null;
+  currentArticle: Article | null;
 }
 
 const initialState: NYTimesState = {
   articles: [],
   loading: false,
   error: null,
+  currentArticle: null,
 };
 
 const nytimesSlice = createSlice({
   name: "nytimes",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentArticle: (state, action: PayloadAction<Article>) => {
+      state.currentArticle = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchNYTArticles.pending, (state) => {
       state.loading = true;
@@ -55,5 +71,5 @@ const nytimesSlice = createSlice({
     });
   },
 });
-
+export const { setCurrentArticle } = nytimesSlice.actions;
 export default nytimesSlice.reducer;
