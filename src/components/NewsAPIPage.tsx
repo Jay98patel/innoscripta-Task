@@ -1,106 +1,107 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { fetchEverything, sources } from "../api/newsAPI";
 import ArticleCard from "./ArticleCard";
 import NewsAPIFilters from "./NewsAPIFilters";
 import PaginationComponent from "./Pagination";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import {
+  fetchNewsAPIArticles,
+  setCurrentPage,
+  setSelectedCountry,
+  setSelectedCategory,
+  setSelectedSource,
+  startLoading,
+  stopLoading,
+  clearArticlesAndSources,
+} from "../features/newsAPISlice";
+import { sources } from "../api/newsAPI";
+import { NewsAPI, Sources } from "../new-app.interface";
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
-import { Country, NewsAPI, Sources } from "../new-app.interface";
-import { useAppSelector } from "../hooks/hooks";
 
 const NewsAPIPage: React.FC = () => {
-  const status = useAppSelector((state: any) => state.newsapi?.loading);
-
-  const [articles, setArticles] = useState<NewsAPI[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
-  const [viewMode] = useState("grid");
-
-  const [categories] = useState<string[]>(NEW_API_CONSTANTS.categoryList);
-  const [countries] = useState<Country[]>(NEW_API_CONSTANTS.countries);
-
-  const [selectedCountry, setSelectedCountry] = useState<string>(
-    NEW_API_CONSTANTS.countries[0].countryShortCode
+  const dispatch = useAppDispatch();
+  const { articles }: { articles: NewsAPI[] } = useAppSelector(
+    (state) => state.newsapi
   );
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const { filters, pagination, loading } = useAppSelector(
+    (state) => state.newsapi
+  );
   const [sourcesForNews, setSourcesForNews] = useState<Sources[]>([]);
-
-  const [selectedSources, setSelectedSources] = useState<string>();
+  const [loadingSources, setLoadingSources] = useState(false);
 
   useEffect(() => {
-    console.log(status);
-    if (status) {
-      fetchEverything({
-        page: currentPage,
-        pageSize: pageSize,
-        sources: selectedSources,
-      })
-        .then((response) => {
-          setArticles(response?.articles);
-          setTotalPages(Math.ceil(response.totalResults / 10));
-          console.log(totalPages);
+    // Dispatch fetch only if it's not already loading
+    if (!loading) {
+      dispatch(startLoading());
+      dispatch(
+        fetchNewsAPIArticles({
+          page: pagination.currentPage,
+          pageSize: pagination.pageSize,
+          sources: filters.selectedSource,
         })
-        .catch((error) => {
-          console.log(error);
-        });
+      ).finally(() => dispatch(stopLoading()));
     }
-  }, [status, currentPage, selectedSources, pageSize]);
+  }, [dispatch, pagination.currentPage, filters, pagination.pageSize]);
 
   useEffect(() => {
-    if (status) {
-      sources(selectedCategory, selectedCountry).then((sources) => {
-        setSourcesForNews(sources);
+    dispatch(startLoading());
+    sources(filters.selectedCategory, filters.selectedCountry)
+      .then((retrievedSources) => {
+        setSourcesForNews(retrievedSources);
+        dispatch(stopLoading());
+      })
+      .catch((error) => {
+        console.error("Failed to fetch sources:", error);
+        dispatch(stopLoading());
       });
-    }
-  }, [status, selectedCategory, selectedCountry]);
-
-  useEffect(() => {
-    console.log(selectedSources);
-  }, [selectedSources]);
-
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-  };
-
-  const handleCountrySelect = (countryCode: string) => {
-    setSelectedCountry(countryCode);
-  };
+  }, [filters.selectedCategory, filters.selectedCountry, dispatch]);
 
   return (
     <>
       <NewsAPIFilters
-        categories={categories}
-        countries={countries}
+        categories={NEW_API_CONSTANTS.categoryList}
+        countries={NEW_API_CONSTANTS.countries}
         sources={sourcesForNews}
-        selectedCountry={selectedCountry}
-        selectedCategory={selectedCategory}
-        onCountrySelect={handleCountrySelect}
-        onCategorySelect={handleCategorySelect}
-        onSourceSelect={setSelectedSources}
+        selectedCountry={filters.selectedCountry}
+        selectedCategory={filters.selectedCategory}
+        selectedSource={filters.selectedSource}
+        onCountrySelect={(country) => {
+          dispatch(setSelectedCountry(country));
+          dispatch(clearArticlesAndSources());
+        }}
+        onCategorySelect={(category) => {
+          dispatch(setSelectedCategory(category));
+          dispatch(clearArticlesAndSources());
+        }}
+        onSourceSelect={(source) => dispatch(setSelectedSource(source))}
       />
       <Row>
-        {articles.length
-          ? articles.map((article, index) => (
-              <Col key={index} sm={12} md={viewMode === "grid" ? 4 : 12}>
-                <ArticleCard
-                  title={article.title}
-                  description={
-                    article.description || "No description available"
-                  }
-                  imageUrl={article.urlToImage}
-                  articleUrl={article.url}
-                />
-              </Col>
-            ))
-          : articles?.length === 0 && <p>No articles found</p>}
+        {articles.length > 0 ? (
+          articles.map((article, index) => (
+            <Col
+              key={index}
+              sm={12}
+              md={pagination.viewMode === "grid" ? 4 : 12}
+            >
+              viewMode: "grid" | "list";
+              <ArticleCard
+                title={article.title}
+                description={article.description || "No description available"}
+                imageUrl={article.urlToImage}
+                articleUrl={article.url}
+              />
+            </Col>
+          ))
+        ) : (
+          <p>No articles found</p>
+        )}
       </Row>
       <Row>
         <Col>
           <PaginationComponent
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={(page) => dispatch(setCurrentPage(page))}
           />
         </Col>
       </Row>
