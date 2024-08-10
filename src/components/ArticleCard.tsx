@@ -14,8 +14,11 @@ const ArticleCard = <T extends string>({
 }: Partial<GenericArticleProps<T>>) => {
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={imageUrl || "default-image-url.jpg"} />
-      Provide a default image URL
+      <Card.Img
+        variant="top"
+        src={imageUrl ?? "../../assets/placeholders/no-image.svg"}
+        alt={title}
+      />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>

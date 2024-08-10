@@ -8,6 +8,13 @@ export interface GuardianParams {
   productionOffice: string;
 }
 
+export interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+  errorInfo: React.ErrorInfo | null;
+}
+
+
 export interface NewsAPIParams {
   q?: string;
   country?: string;
@@ -68,7 +75,7 @@ export interface Country {
 }
 
 export interface FilterDropdownProps {
-  placeholder: string ;
+  placeholder: string;
   options: string[];
   onSelect: (option: string) => void;
 }

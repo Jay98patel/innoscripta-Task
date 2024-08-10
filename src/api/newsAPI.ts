@@ -6,13 +6,13 @@ const NEWSAPI_BASEURL = "https://newsapi.org/v2";
 const EVERYTHING = "everything";
 const TOP_HEADLINES = "top-headlines";
 const SOURCES = "sources";
-
+//69fd06392e1f4a0a86e0709458443923
 export const fetchEverything = async (params: NewsAPIParams) => {
   try {
     const response = await axios.get(`${NEWSAPI_BASEURL}/${EVERYTHING}`, {
       params: { apiKey: API_KEY, ...params },
     });
-    return response.data.articles;
+    return response.data;
   } catch (error) {
     throw new Error("Failed to fetch news from NewsAPI");
   }
