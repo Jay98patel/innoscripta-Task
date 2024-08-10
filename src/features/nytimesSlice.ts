@@ -4,13 +4,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchArticlesFromNYT } from "../api/nytimesAPI";
 
 export const fetchNYTArticles = createAsyncThunk(
-  'nytimes/fetchArticles',
-  async (params: { page: number; sort: string }, { rejectWithValue }) => {
+  "nytimes/fetchArticles",
+  async (
+    params: { page: number; sort: string; q?: string },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await fetchArticlesFromNYT(params);
       return response;
     } catch (err) {
-      return rejectWithValue('Failed to fetch articles');
+      return rejectWithValue("Failed to fetch articles");
     }
   }
 );

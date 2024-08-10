@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../app/store";
 import ArticleCard from "../components/ArticleCard";
 import FilterDropdown from "../components/FilterDropdown";
 import PaginationComponent from "../components/Pagination";
+import SearchBox from "../components/SearchBox"; // Import the SearchBox component
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { fetchNYTArticles } from "../features/nytimesSlice";
 
@@ -16,10 +17,13 @@ const NYTimesPage: React.FC = () => {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("newest");
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
-    dispatch(fetchNYTArticles({ page: currentPage, sort: sortOrder }));
-  }, [dispatch, currentPage, sortOrder]);
+    dispatch(
+      fetchNYTArticles({ page: currentPage, sort: sortOrder, q: searchQuery })
+    );
+  }, [dispatch, currentPage, sortOrder, searchQuery]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -29,8 +33,13 @@ const NYTimesPage: React.FC = () => {
     setSortOrder(sort);
   };
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
   return (
     <div>
+      <SearchBox onSearch={handleSearch} />
       <FilterDropdown
         options={NEW_API_CONSTANTS.sortKeys}
         onSelect={handleSortChange}
@@ -55,10 +64,9 @@ const NYTimesPage: React.FC = () => {
         ))}
       <PaginationComponent
         currentPage={currentPage}
-        totalPages={10}
+        totalPages={10} // Update based on API response
         onPageChange={handlePageChange}
-      />{" "}
-      {/* totalPages should be dynamic based on API response */}
+      />
     </div>
   );
 };
