@@ -6,10 +6,8 @@ import NewsAPIFilters from "./NewsAPIFilters";
 import PaginationComponent from "./Pagination";
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { Country, NewsAPI, Sources } from "../new-app.interface";
-import { useError } from "./ErrorContext";
 
 const NewsAPIPage: React.FC = () => {
-  const { setError } = useError();
 
   const [articles, setArticles] = useState<NewsAPI[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +38,7 @@ const NewsAPIPage: React.FC = () => {
         console.log(totalPages);
       })
       .catch((error) => {
-        setError(error);
+        console.log(error);
       });
   }, [currentPage, selectedSources, pageSize]);
 

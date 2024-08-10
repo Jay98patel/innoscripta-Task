@@ -4,10 +4,14 @@ import { NewsAPIParams } from "../new-app.interface";
 
 export const fetchNewsAPIArticles = createAsyncThunk(
   "newsapi/fetchArticles",
-  async (params: NewsAPIParams) => {
-    // Use the correct type instead of any if you have it defined
-    const response = await fetchEverything(params); // Adjust according to your actual API function
-    return response;
+  async (params: NewsAPIParams, { rejectWithValue }) => {
+    try {
+      // Use the correct type instead of any if you have it defined
+      const response = await fetchEverything(params); // Adjust according to your actual API function
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   }
 );
 
