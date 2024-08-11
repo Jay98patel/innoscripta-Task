@@ -1,3 +1,7 @@
+export interface ApiKeyss {
+  [key: string]: string; // Assuming API keys are strings
+}
+
 export interface GuardianParams {
   page: number;
   pageSize: number;
@@ -8,12 +12,41 @@ export interface GuardianParams {
   productionOffice: string;
 }
 
+// Define the structure of the expected articles response
+export interface GuardianArticle {
+  id: string;
+  webTitle: string;
+  webUrl: string;
+  apiUrl: string;
+}
+
+export interface GuardianApiResponse {
+  status: string;
+  userTier: string;
+  total: number;
+  startIndex: number;
+  pageSize: number;
+  currentPage: number;
+  pages: number;
+  orderBy: string;
+  results: GuardianArticle[];
+}
+
+export interface GuardianState {
+  articles: GuardianArticle[];
+  loading: boolean;
+  error: string | null;
+}
+
+export interface GuardianResponse {
+  response: GuardianApiResponse;
+}
+
 export interface ErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
   errorInfo: React.ErrorInfo | null;
 }
-
 
 export interface NewsAPIParams {
   q?: string;

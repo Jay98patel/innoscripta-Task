@@ -1,24 +1,37 @@
 import axios from "axios";
-import { GuardianParams } from "../new-app.interface";
+import { GuardianParams, GuardianResponse } from "../new-app.interface";
 
 const BASE_URL = "https://content.guardianapis.com/search";
-const API_KEY = process.env.REACT_APP_GUARDIAN_API ;
+let index = 0;
 
 export const fetchArticlesFromGuardian = async (
   params: Partial<GuardianParams>
-) => {
-  console.log(API_KEY, BASE_URL, params);
+): Promise<GuardianResponse> => {
+  const apiKeys = JSON.parse(localStorage.getItem("guardianApi")!);
+
+  if (!apiKeys || apiKeys.length === 0) {
+    throw new Error("API keys not found in localStorage");
+  }
+
   try {
-    const response = await axios.get(BASE_URL, {
+    const response = await axios.get<GuardianResponse>(BASE_URL, {
       params: {
-        "api-key": API_KEY,
+        "api-key": apiKeys[index],
         ...params,
       },
     });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch articles from The Guardian", error);
-    throw new Error("Failed to fetch articles");
+    console.error(
+      "Failed to fetch articles from The Guardian with key",
+      apiKeys[index],
+      error
+    );
+    index = (index + 1) % apiKeys.length;
+    if (index === 0) {
+      throw new Error("All API keys failed to fetch articles");
+    }
+    return fetchArticlesFromGuardian(params);
   }
 };
