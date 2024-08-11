@@ -29,7 +29,6 @@ const NewsAPIPage: React.FC = () => {
   const [sourcesForNews, setSourcesForNews] = useState<Sources[]>([]);
 
   useEffect(() => {
-    // Dispatch fetch only if it's not already loading
     if (!loading) {
       dispatch(startLoading());
       dispatch(

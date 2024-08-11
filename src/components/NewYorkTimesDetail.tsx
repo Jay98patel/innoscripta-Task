@@ -1,7 +1,5 @@
-// src/pages/ArticleDetail.tsx
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 
 const NewyorkArticleDetail: React.FC = () => {
@@ -15,7 +13,7 @@ const NewyorkArticleDetail: React.FC = () => {
 
   return (
     <div>
-       <span> {article.snippet}</span>
+      <span> {article.snippet}</span>
       <h1>{article.headline.main}</h1>
       <img src={article.multimedia[0]?.url} alt={article.headline.main} />
       <p>{article.snippet}</p>

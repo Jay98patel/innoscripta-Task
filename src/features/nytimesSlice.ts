@@ -1,5 +1,3 @@
-// src/features/nytimesSlice.ts
-
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchArticlesFromNYT } from "../api/nytimesAPI";
 

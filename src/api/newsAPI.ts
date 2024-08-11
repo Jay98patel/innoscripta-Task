@@ -1,15 +1,12 @@
 import axios from "axios";
 
-// Interfaces from your app
 import {
-  NewsAPI,
   NewsAPIMainHeaderResponse,
   NewsAPIParams,
   Sources,
-  TopHeadLines,
+  TopHeadLines
 } from "../new-app.interface";
 
-const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 const NEWSAPI_BASEURL = "https://newsapi.org/v2";
 const EVERYTHING = "everything";
 const TOP_HEADLINES = "top-headlines";
@@ -17,17 +14,25 @@ const SOURCES = "sources";
 const apiKeys = JSON.parse(localStorage.getItem("newsApi") || "[]");
 let currentApiIndex = 0;
 
-// Helper function to handle repetitive API request logic
-async function makeApiRequest<T>(endpoint: string, params: object): Promise<T> {
+async function makeApiRequest<T>(
+  endpoint: string,
+  params: object,
+  startTime?: number
+): Promise<T> {
+  const maxRetryDuration = 5000;
+
+  if (!startTime) startTime = Date.now(); 
+
   try {
     const response = await axios.get(`${NEWSAPI_BASEURL}/${endpoint}`, {
       params: { apiKey: apiKeys[currentApiIndex], ...params },
     });
     return response.data;
   } catch (error) {
-    if (apiKeys.length > 0) {
+    const currentTime = Date.now();
+    if (apiKeys.length > 0 && currentTime - startTime < maxRetryDuration) {
       currentApiIndex = (currentApiIndex + 1) % apiKeys.length;
-      setTimeout(() => makeApiRequest(endpoint, params), 4000);
+      return makeApiRequest<T>(endpoint, params, startTime); 
     }
     throw new Error(`Failed to fetch data from ${endpoint}: ${error}`);
   }

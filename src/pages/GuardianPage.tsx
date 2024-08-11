@@ -43,20 +43,29 @@ const GuardianPage: React.FC = () => {
 
   return (
     <div>
-      <Sorting onSortChange={handleSortChange} />
-      {articles.map((article) => (
-        <ArticleCard
-          key={article.id}
-          title={article.webTitle}
-          description={article.webTitle}
-          articleUrl={article.webUrl}
-        />
-      ))}
-      <PaginationComponent
-        currentPage={filters.page}
-        totalPages={10}
-        onPageChange={handlePageChange}
-      />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <Sorting onSortChange={handleSortChange} />
+          <div>
+            {articles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                title={article.webTitle}
+                description={article.webTitle}
+                articleUrl={article.webUrl}
+              />
+            ))}
+          </div>
+          <PaginationComponent
+            currentPage={filters.page}
+            totalPages={10}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 };

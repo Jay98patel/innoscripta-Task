@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchEverything, fetchTopHeadlines } from "../api/newsAPI";
 import { Article, NewsAPI, NewsAPIParams } from "../new-app.interface";
 
-// Fetch articles thunk
 export const fetchNewsAPIArticles = createAsyncThunk(
   "newsapi/fetchArticles",
   async (params: NewsAPIParams, { rejectWithValue }) => {
@@ -91,7 +90,6 @@ const newsApiSlice = createSlice({
       })
       .addCase(fetchNewsAPIArticles.fulfilled, (state, action) => {
         if (action.payload) {
-          // Check for undefined payload
           state.articles = action.payload.articles;
           state.pagination.totalPages = Math.ceil(
             action.payload.totalResults / state.pagination.pageSize

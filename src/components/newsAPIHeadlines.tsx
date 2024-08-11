@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import {
-    fetchNewsAPIHeadlines,
-    setSelectedCountry
+  fetchNewsAPIHeadlines,
+  setSelectedCountry,
 } from "../features/newsAPISlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Article, NewsAPI } from "../new-app.interface";

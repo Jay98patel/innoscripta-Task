@@ -1,5 +1,3 @@
-// src/pages/NYTimesPage.tsx
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
@@ -40,7 +38,7 @@ const NYTimesPage: React.FC = () => {
           sort: sortOrder,
           q: searchQuery,
           begin_date: beginDate,
-          end_date: endDate,
+          end_date: endDate
         })
       );
     }
@@ -72,25 +70,29 @@ const NYTimesPage: React.FC = () => {
       {error && <p>Error: {error}</p>}
       {!loading &&
         !error &&
-        articles.map((article) => (
-          console.log(article),
-          <NewYorkTimesCard
-            key={article._id}
-            _id={article._id}
-            headline={article.headline}
-            title={article.headline.main}
-            description={article.snippet}
-            imageUrl={
-              article.multimedia.length > 0
-                ? `https://www.nytimes.com/${article.multimedia[0].url}`
-                : undefined
-            }
-            articleUrl={article.web_url}
-          />
-        ))}
+        articles.map(
+          (article) => (
+            console.log(article),
+            (
+              <NewYorkTimesCard
+                key={article._id}
+                _id={article._id}
+                headline={article.headline}
+                title={article.headline.main}
+                description={article.snippet}
+                imageUrl={
+                  article.multimedia.length > 0
+                    ? `https://www.nytimes.com/${article.multimedia[0].url}`
+                    : undefined
+                }
+                articleUrl={article.web_url}
+              />
+            )
+          )
+        )}
       <PaginationComponent
         currentPage={currentPage}
-        totalPages={10} // Update based on API response
+        totalPages={10}
         onPageChange={handlePageChange}
       />
     </div>

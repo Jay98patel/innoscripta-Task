@@ -10,7 +10,7 @@ export const fetchGuardianArticles = createAsyncThunk(
   "guardian/fetchArticles",
   async (params: GuardianParams): Promise<GuardianArticle[]> => {
     const response = await fetchArticlesFromGuardian(params);
-    return response.response.results; 
+    return response.response.results;
   }
 );
 
@@ -22,14 +22,14 @@ const initialState: GuardianState = {
 
 const guardianSlice = createSlice({
   name: "guardian",
-  initialState: initialState, 
+  initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchGuardianArticles.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchGuardianArticles.fulfilled, (state, action) => {
-      state.articles = action.payload; 
+      state.articles = action.payload;
       state.loading = false;
     });
     builder.addCase(fetchGuardianArticles.rejected, (state, action) => {

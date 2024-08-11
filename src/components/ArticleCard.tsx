@@ -1,11 +1,8 @@
-// src/components/ArticleCard.tsx
 
-import React from "react";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import { GenericArticleProps } from "../new-app.interface";
 
-// Making the component generic
 const ArticleCard = <T extends string>({
   title,
   description,

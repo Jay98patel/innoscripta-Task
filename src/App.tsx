@@ -4,15 +4,12 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import NewyorkArticleDetail from "./components/NewYorkTimesDetail";
 import ApiKeys from "./constants/api-key-constants";
 import "./styles/App.scss";
-import NewsAPIHeadlines from "./components/newsAPIHeadlines";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GuardianPage = lazy(() => import("./pages/GuardianPage"));
 const NYTimesPage = lazy(() => import("./pages/NYTimesPage"));
 const NewsAPIPage = lazy(() => import("./components/NewsAPIPage"));
-const ArticleDetailModal = lazy(
-  () => import("./components/ArticleDetailModal")
-);
+
 
 const storeApiKey = () => {
   const apikeys = new ApiKeys();
@@ -39,7 +36,6 @@ const App: React.FC = () => {
           <Route path="/guardian" element={<GuardianPage />} />
           <Route path="/nytimes" element={<NYTimesPage />} />
           <Route path="/newsapi" element={<NewsAPIPage />} />
-          <Route path="/article/:id" element={<ArticleDetailModal />} />
           <Route
             path="/new-york-times-articules"
             element={<NewyorkArticleDetail />}
