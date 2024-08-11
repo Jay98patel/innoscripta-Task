@@ -3,14 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import ArticleCard from "../components/ArticleCard";
+import DateSelector from "../components/DateSelector";
 import FilterDropdown from "../components/FilterDropdown";
+import NewYorkTimesCard from "../components/NewYorkTimesCard";
 import PaginationComponent from "../components/Pagination";
 import SearchBox from "../components/SearchBox"; // Import the SearchBox component
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { fetchNYTArticles } from "../features/nytimesSlice";
-import DateSelector from "../components/DateSelector";
-import NewYorkTimesCard from "../components/NewYorkTimesCard";
 
 const NYTimesPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

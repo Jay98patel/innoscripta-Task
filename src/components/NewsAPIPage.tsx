@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import ArticleCard from "./ArticleCard";
-import NewsAPIFilters from "./NewsAPIFilters";
-import PaginationComponent from "./Pagination";
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { sources } from "../api/newsAPI";
+import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import {
+  clearArticlesAndSources,
   fetchNewsAPIArticles,
   setCurrentPage,
-  setSelectedCountry,
   setSelectedCategory,
+  setSelectedCountry,
   setSelectedSource,
   startLoading,
   stopLoading,
-  clearArticlesAndSources,
 } from "../features/newsAPISlice";
-import { sources } from "../api/newsAPI";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { NewsAPI, Sources } from "../new-app.interface";
-import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
+import ArticleCard from "./ArticleCard";
+import NewsAPIFilters from "./NewsAPIFilters";
+import PaginationComponent from "./Pagination";
 
 const NewsAPIPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,10 +27,8 @@ const NewsAPIPage: React.FC = () => {
     (state) => state.newsapi
   );
   const [sourcesForNews, setSourcesForNews] = useState<Sources[]>([]);
-  const [loadingSources, setLoadingSources] = useState(false);
 
   useEffect(() => {
-    // Dispatch fetch only if it's not already loading
     if (!loading) {
       dispatch(startLoading());
       dispatch(
@@ -83,7 +81,6 @@ const NewsAPIPage: React.FC = () => {
               sm={12}
               md={pagination.viewMode === "grid" ? 4 : 12}
             >
-              viewMode: "grid" | "list";
               <ArticleCard
                 title={article.title}
                 description={article.description || "No description available"}

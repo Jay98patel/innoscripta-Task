@@ -23,7 +23,7 @@ export const fetchTopHeadlines = async (params: NewsAPIParams) => {
     const response = await axios.get(`${NEWSAPI_BASEURL}/${TOP_HEADLINES}`, {
       params: { apiKey: API_KEY, ...params },
     });
-    return response.data.articles as NewsAPI[];
+    return response.data
   } catch (error) {
     throw new Error("Failed to fetch top headlines from NewsAPI");
   }

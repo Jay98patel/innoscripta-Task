@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { fetchEverything, sources } from "../api/newsAPI";
-import { NewsAPIParams, Country, Sources } from "../new-app.interface";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchEverything, fetchTopHeadlines } from "../api/newsAPI";
+import { NewsAPIParams } from "../new-app.interface";
 
 // Fetch articles thunk
 export const fetchNewsAPIArticles = createAsyncThunk(
@@ -17,8 +17,23 @@ export const fetchNewsAPIArticles = createAsyncThunk(
   }
 );
 
+export const fetchNewsAPIHeadlines = createAsyncThunk(
+  "newsapi/fetchHeadlines",
+  async (params: NewsAPIParams, { rejectWithValue }) => {
+    try {
+      const response = await fetchTopHeadlines(params);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.toString());
+      }
+    }
+  }
+);
+
 const initialState = {
   articles: [],
+  headlines: [],
   filters: {
     selectedCountry: "",
     selectedSource: "",
@@ -42,6 +57,7 @@ const newsApiSlice = createSlice({
     clearArticlesAndSources: (state) => {
       state.articles = [];
       state.sources = [];
+      state.headlines = [];
       state.pagination.totalPages = 0;
     },
     startLoading: (state) => {
@@ -52,7 +68,7 @@ const newsApiSlice = createSlice({
     },
     setSelectedCountry: (state, action: PayloadAction<string>) => {
       state.filters.selectedCountry = action.payload;
-      state.articles = []; // Clear articles when country changes
+      state.articles = [];
       state.sources = [];
     },
     setSelectedSource: (state, action: PayloadAction<string>) => {
@@ -78,6 +94,13 @@ const newsApiSlice = createSlice({
         state.pagination.totalPages = Math.ceil(
           action.payload.totalResults / state.pagination.pageSize
         );
+        state.loading = false;
+      })
+      .addCase(fetchNewsAPIHeadlines.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchNewsAPIHeadlines.fulfilled, (state, action) => {
+        state.headlines = action.payload;
         state.loading = false;
       })
       .addCase(fetchNewsAPIArticles.rejected, (state, action) => {

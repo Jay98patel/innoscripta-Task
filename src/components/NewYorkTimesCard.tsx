@@ -1,12 +1,11 @@
 // src/components/ArticleCard.tsx
 
 import React from "react";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { GenericArticleProps } from "../new-app.interface";
-import { Article, setCurrentArticle } from "../features/nytimesSlice";
+import Card from "react-bootstrap/Card";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Article, setCurrentArticle } from "../features/nytimesSlice";
 
 const NewYorkTimesCard: React.FC<Partial<Article>> = ({
   title,

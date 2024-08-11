@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import NewyorkArticleDetail from "./components/NewYorkTimesDetail";
 import ApiKeys from "./constants/api-key-constants";
 import "./styles/App.scss";
+import NewsAPIHeadlines from "./components/newsAPIHeadlines";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GuardianPage = lazy(() => import("./pages/GuardianPage"));
@@ -45,6 +46,7 @@ const App: React.FC = () => {
           />
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
+        <NewsAPIHeadlines />
       </Suspense>
     </Router>
   );

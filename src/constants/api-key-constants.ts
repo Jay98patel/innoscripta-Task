@@ -2,6 +2,7 @@ class ApiKeys {
   newsApi: string[] = [
     "31c8be98002d4db5a2b7a5f6bd09aa00",
     "d2ec632339e246b89176daf66d7ef2e5",
+    "69fd06392e1f4a0a86e0709458443923",
   ];
 
   guardianApi: string[] = [
