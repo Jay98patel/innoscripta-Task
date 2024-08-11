@@ -1,0 +1,19 @@
+All Implementations & Features 
+
+API Service Configuration: Set up API services for The Guardian, The New York Times, and NewsAPI.
+Redux Toolkit Integration: Configured Redux with Redux Toolkit for effective state management.
+UI Component Development: Created essential UI components using React Bootstrap.
+Server-Side Filtering and Sorting: Implemented server-side filtering and sorting functionalities.
+Component Modularization: Refactored NewsAPIPage to enhance modularity by introducing NewsAPIFilters.
+Error Handling Improvements: Integrated useError hook for better error management.
+State Management Enhancements: Streamlined Redux state management for sources and optimized useEffect usage.
+Loading and Error State Management: Centralized loading and error state management in Redux.
+Redux Setup and Typing: Ensured correct typing and integration in Redux setup and component interaction.
+API Key Retry Mechanism: Implemented automatic retry for API key failures.
+API Utility Functions: Developed functions for interacting with NewsAPI using Axios.
+Timeout Tracking and Recursive Calls: Added timeout tracking to API requests and adjusted recursive calls.
+SCSS Design and API Management: Enhanced SCSS structure and optimized API call management.
+Page Not Found and Loader Components: Added Page Not Found and Loader components to improve UX.
+Dark and Light Theme Support: Implemented theming capabilities for user-selected dark or light mode.
+Advanced Features and Navigation: Utilized React's advanced features for robust navigation and UI interactions.
+Sorting, Filtering, Searching, and Pagination: Integrated comprehensive sorting, filtering, searching, and pagination capabilities.
