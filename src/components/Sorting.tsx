@@ -8,19 +8,19 @@ interface SortingProps {
 const Sorting: React.FC<SortingProps> = ({ onSortChange }) => {
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="info" id="dropdown-sort">
-        Sort By
+      <Dropdown.Toggle variant="outline-primary" id="dropdown-sort">
+        <i className="bi bi-funnel"></i>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => onSortChange("newest")}>
-          Newest
+          <i className="bi bi-sort-down-alt me-2"></i> Newest
         </Dropdown.Item>
         <Dropdown.Item onClick={() => onSortChange("oldest")}>
-          Oldest
+          <i className="bi bi-sort-up me-2"></i> Oldest
         </Dropdown.Item>
         <Dropdown.Item onClick={() => onSortChange("relevance")}>
-          Relevance
+          <i className="bi bi-bar-chart me-2"></i> Relevance
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
 
 interface DateSelectorProps {
   label: string;
@@ -9,24 +10,26 @@ const DateSelector: React.FC<DateSelectorProps> = ({ label, onDateChange }) => {
   const [date, setDate] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+    const { value } = event.target; // This will be in YYYY-MM-DD format
     setDate(value);
     if (value) {
-      const formattedDate = value.replace(/-/g, "");
+      const formattedDate = value.replace(/-/g, ""); // Convert YYYY-MM-DD to YYYYMMDD
       onDateChange(formattedDate);
     }
   };
 
   return (
-    <div>
-      <label>{label}: </label>
-      <input
-        type="date"
-        value={date}
-        onChange={handleChange}
-        placeholder="YYYYMMDD"
-      />
-    </div>
+    <>
+      <Form.Group>
+        <Form.Label>{label}:</Form.Label>
+        <Form.Control
+          type="date"
+          value={date}
+          onChange={handleChange}
+          placeholder="YYYY-MM-DD"
+        />
+      </Form.Group>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Form } from "react-bootstrap";
 
 interface SearchBoxProps {
   onSearch: (query: string) => void;
@@ -27,14 +28,16 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
   }, [timer]);
 
   return (
-    <div>
-      <input
-        type="text"
-        value={input}
-        onChange={handleInputChange}
-        placeholder="Search articles..."
-      />
-    </div>
+    <>
+      <Form>
+        <Form.Control
+          type="search"
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Search..."
+        />
+      </Form>
+    </>
   );
 };
 

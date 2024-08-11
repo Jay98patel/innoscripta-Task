@@ -8,6 +8,7 @@ import PaginationComponent from "../components/Pagination";
 import SearchBox from "../components/SearchBox"; // Import the SearchBox component
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { fetchNYTArticles } from "../features/nytimesSlice";
+import { Col, Container, Row } from "react-bootstrap";
 
 const NYTimesPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,7 +39,7 @@ const NYTimesPage: React.FC = () => {
           sort: sortOrder,
           q: searchQuery,
           begin_date: beginDate,
-          end_date: endDate
+          end_date: endDate,
         })
       );
     }
@@ -57,45 +58,59 @@ const NYTimesPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <SearchBox onSearch={handleSearch} />
-      <DateSelector label="From Date" onDateChange={setBeginDate} />
-      <DateSelector label="To Date" onDateChange={setEndDate} />
-      <FilterDropdown
-        options={NEW_API_CONSTANTS.sortKeys}
-        onSelect={handleSortChange}
-        placeholder="Sort by"
-      />
+    <Container className="py-3 py-lg-5">
+      <div className="d-flex gap-3 mb-4">
+        <div className="flex-grow-1">
+          <SearchBox onSearch={handleSearch} />
+        </div>
+        <FilterDropdown
+          isNewApiPage={false}
+          options={NEW_API_CONSTANTS.sortKeys}
+          onSelect={handleSortChange}
+          placeholder="Sort by"
+        />
+      </div>
+      <Row className="g-3 mb-4">
+        <Col md={4}>
+          <DateSelector label="From Date" onDateChange={setBeginDate} />
+        </Col>
+        <Col md={4}>
+          <DateSelector label="To Date" onDateChange={setEndDate} />
+        </Col>
+      </Row>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      {!loading &&
-        !error &&
-        articles.map(
-          (article) => (
-            console.log(article),
-            (
-              <NewYorkTimesCard
-                key={article._id}
-                _id={article._id}
-                headline={article.headline}
-                title={article.headline.main}
-                description={article.snippet}
-                imageUrl={
-                  article.multimedia.length > 0
-                    ? `https://www.nytimes.com/${article.multimedia[0].url}`
-                    : undefined
-                }
-                articleUrl={article.web_url}
-              />
-            )
-          )
-        )}
-      <PaginationComponent
-        currentPage={currentPage}
-        totalPages={10}
-        onPageChange={handlePageChange}
-      />
-    </div>
+      <div className="news-cards">
+        {!loading &&
+          !error &&
+          articles.map((article) => (
+            <NewYorkTimesCard
+              key={article._id}
+              _id={article._id}
+              headline={article.headline}
+              title={article.headline.main}
+              description={article.snippet}
+              document_type={article.document_type}
+              lead_paragraph={article.lead_paragraph}
+              snippet={article.snippet}
+              web_url={article.web_url}
+              imageUrl={
+                article.multimedia.length > 0
+                  ? `https://www.nytimes.com/${article.multimedia[0].url}`
+                  : undefined
+              }
+              articleUrl={article.web_url}
+            />
+          ))}
+      </div>
+      <div className="d-flex justify-content-end mt-4">
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={10}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </Container>
   );
 };
 

@@ -4,7 +4,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Article, setCurrentArticle } from "../features/nytimesSlice";
 
 const NewYorkTimesCard: React.FC<Partial<Article>> = ({
@@ -17,13 +17,11 @@ const NewYorkTimesCard: React.FC<Partial<Article>> = ({
   description,
   imageUrl,
   articleUrl,
+  document_type,
+  lead_paragraph,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const multimediaImageUrl =
-    multimedia && multimedia.length > 0
-      ? `https://www.nytimes.com/${multimedia[0].url}`
-      : undefined;
 
   const handleReadMore = () => {
     dispatch(
@@ -37,32 +35,41 @@ const NewYorkTimesCard: React.FC<Partial<Article>> = ({
         description: description ?? "",
         imageUrl,
         articleUrl,
+        document_type,
+        lead_paragraph,
       })
     );
-    const id = _id ?? "";
-    console.log("Current article:", id);
-    navigate(`/new-york-times-articules`);
+    navigate(`/new-york-times-articles`);
   };
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <div>{title}</div>
-      <div>{description}</div>
-      <img src={imageUrl} alt={title} />
-      <div>{articleUrl}</div>
-      <Card.Img
-        variant="top"
-        src={multimediaImageUrl ?? "../../assets/placeholders/no-image.svg"}
-        alt={headline && headline.main}
-      />
-      <Card.Body>
-        <Card.Title>{headline && headline.main}</Card.Title>
-        <Card.Text>{snippet}</Card.Text>
-        <Button variant="primary" onClick={handleReadMore}>
-          Read More
-        </Button>
-      </Card.Body>
-    </Card>
+    <>
+      <Card>
+        <Card.Img
+          variant="top"
+          src={imageUrl ?? "../../assets/placeholders/no-image.svg"}
+          alt={headline?.main ?? title}
+        />
+        <Card.Body>
+          <Card.Title>{headline?.main ?? title}</Card.Title>
+          <Card.Text>{description ?? snippet}</Card.Text>
+        </Card.Body>
+        {articleUrl && (
+          <Card.Footer className="d-flex align-items-center gap-3 justify-content-between">
+            <Link
+              to={articleUrl ?? "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Read Full Article
+            </Link>
+            <Button variant="info" onClick={handleReadMore}>
+              View Details
+            </Button>
+          </Card.Footer>
+        )}
+      </Card>
+    </>
   );
 };
 

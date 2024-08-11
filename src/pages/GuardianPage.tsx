@@ -3,6 +3,7 @@ import { fetchArticlesFromGuardian } from "../api/guardianAPI";
 import ArticleCard from "../components/ArticleCard";
 import PaginationComponent from "../components/Pagination";
 import Sorting from "../components/Sorting";
+import { Container } from "react-bootstrap";
 
 interface Article {
   id: string;
@@ -11,6 +12,7 @@ interface Article {
     thumbnail?: string;
   };
   webUrl: string;
+  type?: string;
 }
 
 const GuardianPage: React.FC = () => {
@@ -42,31 +44,36 @@ const GuardianPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container className="py-3 py-lg-5">
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <Sorting onSortChange={handleSortChange} />
-          <div>
+          <div className="d-flex align-items-center gap-3 mb-4">
+            <h5 className="m-0">Guardian News</h5>
+            <Sorting onSortChange={handleSortChange} />
+          </div>
+          <div className="d-grid news-cards gap-4">
             {articles.map((article) => (
               <ArticleCard
                 key={article.id}
                 title={article.webTitle}
-                description={article.webTitle}
                 articleUrl={article.webUrl}
+                type={article.type}
               />
             ))}
           </div>
-          <PaginationComponent
-            currentPage={filters.page}
-            totalPages={10}
-            onPageChange={handlePageChange}
-          />
+          <div className="d-flex justify-content-end mt-4">
+            <PaginationComponent
+              currentPage={filters.page}
+              totalPages={10}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </>
       )}
       {error && <p>Error: {error}</p>}
-    </div>
+    </Container>
   );
 };
 

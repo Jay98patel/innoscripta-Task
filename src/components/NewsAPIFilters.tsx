@@ -28,33 +28,27 @@ const NewsAPIFilters: React.FC<NewsAPIFiltersProps> = ({
   return (
     <>
       <Form>
-        <Row>
-          <Col md={6}>
-            <FilterDropdown
-              placeholder="Filter by Category"
-              options={categories}
-              onSelect={onCategorySelect}
-            />
-          </Col>
-          <Col>
-            {countries.map((country, index) => (
-              <Badge
-                key={index}
-                bg={
-                  selectedCountry === country.countryShortCode
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => onCountrySelect(country.countryShortCode)}
-                style={{ cursor: "pointer", marginRight: "5px" }}
-              >
-                {country.countryName}
-              </Badge>
-            ))}
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+        <div>
+          <Form.Label>Country:</Form.Label>
+        </div>
+        {countries.map((country, index) => (
+          <Badge
+            key={index}
+            bg={
+              selectedCountry === country.countryShortCode ? "primary" : "light"
+            }
+            text="dark"
+            onClick={() => onCountrySelect(country.countryShortCode)}
+            style={{ cursor: "pointer", marginRight: "5px" }}
+          >
+            {country.countryName}
+          </Badge>
+        ))}
+        <Row className="my-4">
+          <Col lg={10}>
+            <Form.Label>
+              Please select a source to view its articles:
+            </Form.Label>
             <Form.Select
               value={selectedSource}
               onChange={(e) => onSourceSelect(e.target.value)}
@@ -69,6 +63,14 @@ const NewsAPIFilters: React.FC<NewsAPIFiltersProps> = ({
                 <option value="">No sources available</option>
               )}
             </Form.Select>
+          </Col>
+          <Col lg={2}>
+            <FilterDropdown
+              placeholder="Filter by Category"
+              options={categories}
+              isNewApiPage={true}
+              onSelect={onCategorySelect}
+            />
           </Col>
         </Row>
       </Form>

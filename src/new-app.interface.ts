@@ -87,7 +87,7 @@ export interface NYTParams {
 export interface ArticleCardProps {
   title: string;
   description: string;
-  imageUrl: string | undefined; // Allow undefined
+  imageUrl: string | undefined; 
   articleUrl: string;
 }
 
@@ -120,6 +120,7 @@ export interface GenericArticleProps<T> {
   description: T;
   imageUrl: T;
   articleUrl: T;
+  type?: T;
 }
 
 export interface Sources {
@@ -141,4 +142,5 @@ export interface FilterDropdownProps {
   placeholder: string;
   options: string[];
   onSelect: (option: string) => void;
+  isNewApiPage ?: boolean
 }

@@ -13,7 +13,6 @@ const PaginationComponent: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   let items = [];
-  <div>fwwf {totalPages}</div>;
   for (let number = 1; number <= totalPages; number++) {
     items.push(
       <Pagination.Item

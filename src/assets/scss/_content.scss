@@ -1,0 +1,37 @@
+// Source Cards used on Home Page
+.card {
+  transition: $transition-base;
+  &.source-card {
+    &:hover {
+      border: $border-width solid $secondary;
+      transform: translateY(-5px);
+    }
+  }
+
+  &.headlines-card {
+    background-color: var(--headlines-card-bg);
+    max-width: $headlines-card-max-width;
+    &:hover {
+      border: $border-width solid $primary;
+    }
+  }
+}
+
+// News Card
+.news-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1.5rem;
+
+  .card {
+    &:hover {
+      box-shadow: $box-shadow-lg;
+    }
+  }
+}
+
+// Pagination
+.pagination {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}

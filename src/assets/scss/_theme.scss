@@ -1,0 +1,11 @@
+:root {
+  --app-body-bg: #ededed;
+  --app-body-color: #3c3c3c;
+  --headlines-card-bg: #f0f0f0;
+}
+
+[data-bs-theme="dark"] {
+  --app-body-bg: #121927;
+  --app-body-color: #d1d4e0;
+  --headlines-card-bg: #121927;
+}

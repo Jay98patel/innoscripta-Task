@@ -31,6 +31,8 @@ export interface Article {
   description: string;
   imageUrl?: string;
   articleUrl?: string;
+  document_type?: string;
+  lead_paragraph?: string;
 }
 
 interface NYTimesState {

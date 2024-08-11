@@ -1,0 +1,27 @@
+// Theme variables
+$primary: #4169e1;
+$secondary: #dd6b20;
+$info: #22356d;
+
+// Base variables
+$variable-prefix: app-;
+$enable-shadows: true;
+$transition-base: all 0.4s ease-in-out;
+
+// Shadow
+$box-shadow: 0 0.15rem 0.5rem rgba($primary, 0.1);
+$box-shadow-lg: 0 0.15rem 1rem rgba($primary, 0.15);
+// $input-box-shadow: none;
+
+// Font family
+$font-family-base: "Josefin Sans", sans-serif;
+
+// Navbar
+$navbar-light-active-color: $primary;
+$nav-link-font-weight: 500;
+
+// Card
+$card-border-color: transparent;
+$card-box-shadow: $box-shadow;
+$card-border-radius: 12px;
+$headlines-card-max-width: 400px;

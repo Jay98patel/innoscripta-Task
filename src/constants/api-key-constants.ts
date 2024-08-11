@@ -10,7 +10,8 @@ class ApiKeys {
     "4dbc17e007ab436fb66416009dfb59a8",
     "0ae31ba3cfe345549368dac12da433d5",
     "523d970e50b6444bb9802bf4e4d67742",
-    "b0a320f12ce6435db52d94dd968f5259"
+    "b0a320f12ce6435db52d94dd968f5259",
+    "1f0ef25771d74023a3118716b153dfc3"
   ];
 
   guardianApi: string[] = [

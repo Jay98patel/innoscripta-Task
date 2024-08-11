@@ -8,6 +8,8 @@ import {
 } from "../features/newsAPISlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Article, NewsAPI } from "../new-app.interface";
+import { Card, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface Country {
   countryShortCode: string;
@@ -38,9 +40,9 @@ const NewsAPIHeadlines = () => {
   };
 
   return (
-    <div>
-      <h1>Top Headlines</h1>
-      <select value={country} onChange={handleCountryChange}>
+    <>
+      <h3 className="mb-3">Top Headlines</h3>
+      <Form.Select className="mb-4" value={country} onChange={handleCountryChange}>
         {NEW_API_CONSTANTS.countries.map((country: Country) => (
           <option
             key={country.countryShortCode}
@@ -49,30 +51,25 @@ const NewsAPIHeadlines = () => {
             {country.countryName}
           </option>
         ))}
-      </select>
+      </Form.Select>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
+        <div className="d-flex gap-4 flex-nowrap overflow-x-auto overflow-y-hidden p-2">
           {headlines &&
-            headlines.map((headline: Article) => (
-              <li key={headline.url || headline.title}>
-                {" "}
-                {/* Using URL or title as key */}
-                <h2>{headline.author}</h2>
-                <p>{headline.description || "No description available."}</p>
-                <a
-                  href={headline.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Read more
-                </a>
-              </li>
+            headlines.map((headline: Article, index) => (
+              <Card className="headlines-card flex-shrink-0">
+                <Card.Body className="d-flex flex-column gap-3">
+                  <Card.Title>{headline.title}</Card.Title>
+                  <Link className="mt-auto ms-auto" to={headline.url} key={index}>
+                    Read more
+                  </Link>
+                </Card.Body>
+              </Card>
             ))}
-        </ul>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
