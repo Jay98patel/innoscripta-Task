@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import newsIllustratorGifDark from "../assets/images/news-illustrator-dark.gif";
 import newsIllustratorGifLight from "../assets/images/news-illustrator.gif";
 import { ThemeContext } from "../components/ThemeContext";
-import NewsAPIHeadlines from "../components/newsAPIHeadlines";
+import NewsAPIHeadlines from "../components/NewsAPIHeadlines";
 
 const HomePage: React.FC = () => {
   const { theme } = useContext(ThemeContext);
