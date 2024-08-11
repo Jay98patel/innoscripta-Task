@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import NewyorkArticleDetail from "./components/NewYorkTimesDetail";
 import ApiKeys from "./constants/api-key-constants";
 import "./styles/App.scss";
+import PageNotFound from "./components/PageNotFound";
+import Loading from "./components/Loading";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GuardianPage = lazy(() => import("./pages/GuardianPage"));
@@ -30,7 +32,7 @@ const App: React.FC = () => {
   });
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <div className="d-flex flex-column vh-100 overflow-hidden">
           <Header />
           <div className="flex-grow-1 overflow-auto">
@@ -43,7 +45,7 @@ const App: React.FC = () => {
                 path="/new-york-times-articles"
                 element={<NewyorkArticleDetail />}
               />
-              <Route path="*" element={<div>Page not found</div>} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </div>
         </div>

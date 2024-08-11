@@ -47,7 +47,6 @@ const NewsAPIPage: React.FC = () => {
     fetchSources(filters.selectedCategory, filters.selectedCountry)
       .then((retrievedSources: any) => {
         setSourcesForNews(retrievedSources?.sources);
-        console.log(retrievedSources);
         dispatch(stopLoading());
       })
       .catch((error: Error) => {

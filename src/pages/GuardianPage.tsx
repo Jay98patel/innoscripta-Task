@@ -4,6 +4,7 @@ import ArticleCard from "../components/ArticleCard";
 import PaginationComponent from "../components/Pagination";
 import Sorting from "../components/Sorting";
 import { Container } from "react-bootstrap";
+import Loading from "../components/Loading";
 
 interface Article {
   id: string;
@@ -46,7 +47,7 @@ const GuardianPage: React.FC = () => {
   return (
     <Container className="py-3 py-lg-5">
       {loading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <>
           <div className="d-flex align-items-center gap-3 mb-4">

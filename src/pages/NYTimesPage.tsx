@@ -9,6 +9,7 @@ import SearchBox from "../components/SearchBox"; // Import the SearchBox compone
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { fetchNYTArticles } from "../features/nytimesSlice";
 import { Col, Container, Row } from "react-bootstrap";
+import Loading from "../components/Loading";
 
 const NYTimesPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -78,7 +79,9 @@ const NYTimesPage: React.FC = () => {
           <DateSelector label="To Date" onDateChange={setEndDate} />
         </Col>
       </Row>
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <Loading />
+      )}
       {error && <p>Error: {error}</p>}
       <div className="news-cards">
         {!loading &&

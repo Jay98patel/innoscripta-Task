@@ -24,6 +24,7 @@
   grid-gap: 1.5rem;
 
   .card {
+    background-color: var(--news-card-bg);
     &:hover {
       box-shadow: $box-shadow-lg;
     }
@@ -34,4 +35,18 @@
 .pagination {
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+// Overlay Loader
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }

@@ -33,7 +33,7 @@ const ThemeToggle: React.FC = () => {
         )}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu align={"end"}>
         <Dropdown.Item
           eventKey="light"
           className="d-flex gap-2 align-items-center"
