@@ -1,41 +1,53 @@
 import axios from "axios";
-import { NewsAPI, NewsAPIParams, Sources } from "../new-app.interface";
+
+// Interfaces from your app
+import {
+  NewsAPI,
+  NewsAPIMainHeaderResponse,
+  NewsAPIParams,
+  Sources,
+  TopHeadLines,
+} from "../new-app.interface";
 
 const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 const NEWSAPI_BASEURL = "https://newsapi.org/v2";
 const EVERYTHING = "everything";
 const TOP_HEADLINES = "top-headlines";
 const SOURCES = "sources";
-//69fd06392e1f4a0a86e0709458443923
-export const fetchEverything = async (params: NewsAPIParams) => {
+const apiKeys = JSON.parse(localStorage.getItem("newsApi") || "[]");
+let currentApiIndex = 0;
+
+// Helper function to handle repetitive API request logic
+async function makeApiRequest<T>(endpoint: string, params: object): Promise<T> {
   try {
-    const response = await axios.get(`${NEWSAPI_BASEURL}/${EVERYTHING}`, {
-      params: { apiKey: API_KEY, ...params },
+    const response = await axios.get(`${NEWSAPI_BASEURL}/${endpoint}`, {
+      params: { apiKey: apiKeys[currentApiIndex], ...params },
     });
     return response.data;
   } catch (error) {
-    throw new Error("Failed to fetch news from NewsAPI");
+    if (apiKeys.length > 0) {
+      currentApiIndex = (currentApiIndex + 1) % apiKeys.length;
+      setTimeout(() => makeApiRequest(endpoint, params), 4000);
+    }
+    throw new Error(`Failed to fetch data from ${endpoint}: ${error}`);
   }
+}
+
+export const fetchEverything = async (
+  params: NewsAPIParams
+): Promise<NewsAPIMainHeaderResponse> => {
+  return makeApiRequest<NewsAPIMainHeaderResponse>(EVERYTHING, params);
 };
 
-export const fetchTopHeadlines = async (params: NewsAPIParams) => {
-  try {
-    const response = await axios.get(`${NEWSAPI_BASEURL}/${TOP_HEADLINES}`, {
-      params: { apiKey: API_KEY, ...params },
-    });
-    return response.data
-  } catch (error) {
-    throw new Error("Failed to fetch top headlines from NewsAPI");
-  }
+export const fetchTopHeadlines = async (
+  params: NewsAPIParams
+): Promise<TopHeadLines> => {
+  return makeApiRequest<TopHeadLines>(TOP_HEADLINES, params);
 };
 
-export const sources = async (category: string, country: string) => {
-  try {
-    const response = await axios.get(`${NEWSAPI_BASEURL}/${SOURCES}`, {
-      params: { apiKey: API_KEY, category, country },
-    });
-    return response.data.sources as Sources[];
-  } catch (error) {
-    throw new Error("Failed to fetch sources from NewsAPI");
-  }
+export const fetchSources = async (
+  category: string,
+  country: string
+): Promise<Sources[]> => {
+  return makeApiRequest<Sources[]>(SOURCES, { category, country });
 };

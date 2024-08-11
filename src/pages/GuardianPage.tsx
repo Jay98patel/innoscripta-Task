@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchArticlesFromGuardian } from "../api/guardianAPI";
 import ArticleCard from "../components/ArticleCard";
 import PaginationComponent from "../components/Pagination";
 import Sorting from "../components/Sorting";
-import FilterDropdown from "../components/FilterDropdown";
 
 interface Article {
   id: string;

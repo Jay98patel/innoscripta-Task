@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchEverything, fetchTopHeadlines } from "../api/newsAPI";
-import { NewsAPIParams } from "../new-app.interface";
+import { Article, NewsAPI, NewsAPIParams } from "../new-app.interface";
 
 // Fetch articles thunk
 export const fetchNewsAPIArticles = createAsyncThunk(
@@ -32,8 +32,8 @@ export const fetchNewsAPIHeadlines = createAsyncThunk(
 );
 
 const initialState = {
-  articles: [],
-  headlines: [],
+  articles: [] as NewsAPI[],
+  headlines: [] as Article[],
   filters: {
     selectedCountry: "",
     selectedSource: "",
@@ -90,20 +90,28 @@ const newsApiSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchNewsAPIArticles.fulfilled, (state, action) => {
-        state.articles = action.payload.articles;
-        state.pagination.totalPages = Math.ceil(
-          action.payload.totalResults / state.pagination.pageSize
-        );
+        if (action.payload) {
+          // Check for undefined payload
+          state.articles = action.payload.articles;
+          state.pagination.totalPages = Math.ceil(
+            action.payload.totalResults / state.pagination.pageSize
+          );
+        }
         state.loading = false;
       })
       .addCase(fetchNewsAPIHeadlines.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchNewsAPIHeadlines.fulfilled, (state, action) => {
-        state.headlines = action.payload;
+        if (action.payload && action.payload.articles) {
+          state.headlines = action.payload.articles;
+          state.pagination.totalPages = Math.ceil(
+            action.payload.totalResults / state.pagination.pageSize
+          );
+        }
         state.loading = false;
       })
-      .addCase(fetchNewsAPIArticles.rejected, (state, action) => {
+      .addCase(fetchNewsAPIHeadlines.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "An unexpected error occurred";
       });

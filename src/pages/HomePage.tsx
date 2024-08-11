@@ -1,8 +1,9 @@
 // src/pages/HomePage.tsx
 
 import React from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import NewsAPIHeadlines from "../components/newsAPIHeadlines";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const HomePage: React.FC = () => {
           </Button>
         </Col>
       </Row>
+      <NewsAPIHeadlines />
     </Container>
   );
 };

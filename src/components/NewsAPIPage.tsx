@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { sources } from "../api/newsAPI";
+import { fetchSources } from "../api/newsAPI";
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import {
   clearArticlesAndSources,
@@ -29,6 +29,7 @@ const NewsAPIPage: React.FC = () => {
   const [sourcesForNews, setSourcesForNews] = useState<Sources[]>([]);
 
   useEffect(() => {
+    // Dispatch fetch only if it's not already loading
     if (!loading) {
       dispatch(startLoading());
       dispatch(
@@ -43,12 +44,12 @@ const NewsAPIPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(startLoading());
-    sources(filters.selectedCategory, filters.selectedCountry)
-      .then((retrievedSources) => {
+    fetchSources(filters.selectedCategory, filters.selectedCountry)
+      .then((retrievedSources: Sources[]) => {
         setSourcesForNews(retrievedSources);
         dispatch(stopLoading());
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.error("Failed to fetch sources:", error);
         dispatch(stopLoading());
       });
@@ -81,6 +82,7 @@ const NewsAPIPage: React.FC = () => {
               sm={12}
               md={pagination.viewMode === "grid" ? 4 : 12}
             >
+              viewMode: "grid" | "list";
               <ArticleCard
                 title={article.title}
                 description={article.description || "No description available"}

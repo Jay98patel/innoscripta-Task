@@ -12,6 +12,26 @@ export interface GuardianParams {
   productionOffice: string;
 }
 
+export interface TopHeadLines {
+  status: string;
+  totalResults: number;
+  articles: Article[];
+}
+
+export interface Article {
+  source: {
+    id: string | null;
+    name: string;
+  };
+  author: string | null;
+  title: string;
+  description: string | null;
+  url: string;
+  urlToImage: string | null;
+  publishedAt: string;
+  content: string | null;
+}
+
 // Define the structure of the expected articles response
 export interface GuardianArticle {
   id: string;
@@ -71,11 +91,20 @@ export interface ArticleCardProps {
   articleUrl: string;
 }
 
+export interface NewsAPIMainHeaderResponse {
+  status: string;
+  totalResults: number;
+  articles: NewsAPI[];
+}
+
 export interface NewsAPI {
   title: string;
   description?: string;
   urlToImage: string;
   url: string;
+  author?: string;
+  articles?: any;
+  totalResults?: number;
 }
 
 export interface NYT {

@@ -46,7 +46,7 @@ const App: React.FC = () => {
           />
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
-        <NewsAPIHeadlines />
+       
       </Suspense>
     </Router>
   );
