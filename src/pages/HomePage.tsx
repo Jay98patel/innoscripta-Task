@@ -13,7 +13,6 @@ const HomePage: React.FC = () => {
   );
 
   useEffect(() => {
-    // const storedTheme = localStorage.getItem("theme");
     if (theme === "dark") {
       setNewsIllustratorGif(newsIllustratorGifDark);
     } else {

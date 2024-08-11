@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { ThemeContext } from "./ThemeContext";
 
 const ThemeToggle: React.FC = () => {
-//   const [theme, setTheme] = useState<string>("light");
   const { theme, toggleTheme } = useContext(ThemeContext);
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);

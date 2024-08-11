@@ -5,7 +5,7 @@ import DateSelector from "../components/DateSelector";
 import FilterDropdown from "../components/FilterDropdown";
 import NewYorkTimesCard from "../components/NewYorkTimesCard";
 import PaginationComponent from "../components/Pagination";
-import SearchBox from "../components/SearchBox"; // Import the SearchBox component
+import SearchBox from "../components/SearchBox"; 
 import { NEW_API_CONSTANTS } from "../constants/new-api.constants";
 import { fetchNYTArticles } from "../features/nytimesSlice";
 import { Col, Container, Row } from "react-bootstrap";
