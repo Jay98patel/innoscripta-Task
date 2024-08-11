@@ -1,8 +1,16 @@
 class ApiKeys {
   newsApi: string[] = [
+    "b738ed2669c54125aae96fba7c1107d5",
+    "fcc8dfc30bdd431d9f49ebbfd9996ced",
+    "dbe57b028aeb41e285a226a94865f7a7",
+    "714ef9b8a6ef47d19b4bda6f4f0d100f",
     "31c8be98002d4db5a2b7a5f6bd09aa00",
     "d2ec632339e246b89176daf66d7ef2e5",
     "69fd06392e1f4a0a86e0709458443923",
+    "4dbc17e007ab436fb66416009dfb59a8",
+    "0ae31ba3cfe345549368dac12da433d5",
+    "523d970e50b6444bb9802bf4e4d67742",
+    "b0a320f12ce6435db52d94dd968f5259"
   ];
 
   guardianApi: string[] = [

@@ -19,7 +19,7 @@ async function makeApiRequest<T>(
   params: object,
   startTime?: number
 ): Promise<T> {
-  const maxRetryDuration = 5000;
+  const maxRetryDuration = 4000;
 
   if (!startTime) startTime = Date.now(); 
 
